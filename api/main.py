@@ -69,7 +69,7 @@ def login():
     mydb = dbConnect()
     mycursor = mydb.cursor()
 
-    sql = "SELECT name, password FROM users WHERE user = %s"
+    sql = "SELECT * FROM users WHERE user = %s"
     val = (data['user'],)
 
     mycursor.execute(sql, val)
@@ -79,7 +79,7 @@ def login():
     # Process the data
     isValid = authenticate_password(data['password'], result['password'])
 
-    if hash == None or not isValid:
+    if result == None or not isValid:
       response = {"message": "Invalid credentials"}
       return jsonify(response), 401
 
@@ -89,7 +89,7 @@ def login():
     history = mycursor.fetchall()
 
     # Generate token
-    token = generate_token(data['user'])
+    token = generate_token(result['user'])
 
     # Return a response
     response = {"name":result['name'], "promptHistory": history, "token": token}
@@ -113,6 +113,13 @@ def handlePrompt():
            return jsonify({"message": "Invalid token."}), 401
     except:
        return jsonify({"message": "Invalid token."}), 401
+
+    # write code to store in db
+    sql = "INSERT INTO history (prompt) VALUES (%s)"
+    val = (data['topic'])
+    mycursor.execute(sql, val)
+
+    mydb.commit()
 
     # Generate prompt
     talking_points = []
