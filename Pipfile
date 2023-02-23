@@ -7,6 +7,9 @@ name = "pypi"
 requests = "*"
 python-decouple = "*"
 flask = "*"
+flask-cors = "*"
+mysql-connector-python = "*"
+jwt = "*"
 
 [dev-packages]
 
