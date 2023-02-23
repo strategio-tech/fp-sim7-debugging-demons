@@ -5,10 +5,20 @@ import mysql.connector
 MYSQL_HOST = config('MYSQL_HOST')
 MYSQL_USER = config('MYSQL_USER')
 MYSQL_PASS = config('MYSQL_PASS')
+MYSQL_DATABASE = config('MYSQL_DATABASE')
 
-def dbConnect():
+def dbConnect(setup):
+
+  if setup:
+    return mysql.connector.connect(
+    host=MYSQL_HOST,
+    user=MYSQL_USER,
+    password=MYSQL_PASS
+    )
+
   return mysql.connector.connect(
-  host=MYSQL_HOST,
-  user=MYSQL_USER,
-  password=MYSQL_PASS
-)
+    database=MYSQL_DATABASE,
+    host=MYSQL_HOST,
+    user=MYSQL_USER,
+    password=MYSQL_PASS
+  )
