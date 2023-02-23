@@ -26,3 +26,17 @@ $ python3 -m pipenv install
 
 To setup the database and tables
 $ python3 api/utils/dbSetup.py
+
+## Launching Web Server
+
+python3 -m pipenv shell
+
+cd api
+
+gunicorn -b 127.0.0.1:3030 main:app
+
+## Launch Dev Server
+
+From root directory run
+
+python3 api/main.py

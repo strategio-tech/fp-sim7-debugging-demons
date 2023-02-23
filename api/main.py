@@ -13,6 +13,10 @@ ADMIN_PASS = config('ADMIN_PASS')
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def welcome_screen():
+   return 'Hello World'
+
 @app.route('/signup', methods=['POST'])
 def signup():
     
