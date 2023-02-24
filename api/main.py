@@ -15,13 +15,14 @@ CORS(app)
 
 @app.route('/')
 def welcome_screen():
-   return 'Hello World'
+   return 'Hello, World!'
 
 @app.route('/signup', methods=['POST'])
 def signup():
     
     # Get the data from the POST request
     data = request.get_json()
+    user = data['user'].lower()
 
     # Process the data
     if not authenticate_password(data['admin_password'], ADMIN_PASS):
@@ -35,7 +36,7 @@ def signup():
     mycursor = mydb.cursor()
 
     sql = "SELECT user FROM users WHERE user = %s"
-    val = (data['user'],)
+    val = (user,)
 
     mycursor.execute(sql, val)
 
@@ -47,7 +48,7 @@ def signup():
 
     # write code to store in db
     sql = "INSERT INTO users (name, user, password) VALUES (%s, %s, %s)"
-    val = (data['name'], data['user'], hash)
+    val = (data['name'], user, hash)
     mycursor.execute(sql, val)
 
     mydb.commit()
@@ -58,32 +59,40 @@ def signup():
     result = mycursor.fetchall()
 
     #write code to create token
-    token = generate_token(data['user'])
+    token = generate_token(user)
 
     # Return a response
     response = {"name": data['name'], "promptHistory": result, "token": token}
-    return jsonify(response, 200)
+    return jsonify(response)
 
 @app.route('/login', methods=['POST'])
 def login():
     # Get the data from the POST request
     data = request.get_json()
+    user = data['user'].lower()
 
     #write code to request password from db
     mydb = dbConnect()
     mycursor = mydb.cursor()
 
     sql = "SELECT * FROM users WHERE user = %s"
-    val = (data['user'],)
+    val = (user,)
 
     mycursor.execute(sql, val)
 
+    # tuple(id, name, user, password)
     result = mycursor.fetchone()
 
-    # Process the data
-    isValid = authenticate_password(data['password'], result['password'])
+    if result == None:
+      response = {"message": "Invalid credentials"}
+      return jsonify(response), 401
+    
+    id, name, user, hash = result
 
-    if result == None or not isValid:
+    # Process the data
+    isValid = authenticate_password(data['password'], hash)
+
+    if not isValid:
       response = {"message": "Invalid credentials"}
       return jsonify(response), 401
 
@@ -93,10 +102,10 @@ def login():
     history = mycursor.fetchall()
 
     # Generate token
-    token = generate_token(result['user'])
+    token = generate_token(user)
 
     # Return a response
-    response = {"name":result['name'], "promptHistory": history, "token": token}
+    response = {"name":name, "promptHistory": history, "token": token}
     return jsonify(response)
 
 # Route to handle POST requests to /api/second_route
@@ -104,6 +113,8 @@ def login():
 def handlePrompt():
     # Get the data from the POST request
     data = request.get_json()
+    user = data['user'].lower()
+    topic = data['topic'].lower()
 
     #connect to db
     mydb = dbConnect()
@@ -111,40 +122,51 @@ def handlePrompt():
 
     # Decode token
     try:
-        user = decode_token(data['token'])
+        _user = decode_token(data['token'])
 
-        if user != data['user']:
+        if _user != user:
            return jsonify({"message": "Invalid token."}), 401
     except:
        return jsonify({"message": "Invalid token."}), 401
-
+    
     # write code to store in db
-    sql = "INSERT INTO history (prompt) VALUES (%s)"
-    val = (data['topic'])
+    sql = "SELECT prompt FROM history WHERE prompt = %s"
+    val = (topic,)
+
     mycursor.execute(sql, val)
 
-    mydb.commit()
+    myresult = mycursor.fetchone()
+
+    if myresult == None:
+      sql = "INSERT INTO history (prompt) VALUES (%s)"
+      val = (topic,)
+      mycursor.execute(sql, val)
+
+      mydb.commit()
 
     # Generate prompt
     talking_points = []
-    for point in data['key_points']:
-       talking_points.append(point)
+
+    if len(data['key_points']) > 0:
+      for point in data['key_points']:
+        talking_points.append(point)
     
     ", ".join(talking_points)
 
-    prompt = f"Write a technical blog from the point of view of a technologist in training about {data['topic']}. Include the following talking points: {talking_points}. Make sure the end has a call to action to subscribe to your blog."
+    prompt = f"Starting with the title, write a technical blog from the point of view of a technologist in training about {data['topic']}. Include the following talking points: {talking_points}. Make sure the end has a call to action to subscribe to your blog."
     
     # Make request to GPT
     url = 'https://api.openai.com/v1/completions'
     body = {
     "model": "text-ada-001",
     "prompt": prompt,
-    "max_tokens": 1000,
+    "max_tokens": 12,
     "temperature": 1
     }
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"}
 
     response = requests.post(url, json=body, headers=headers)
+    response = response.json()
 
     # Return a response
     response = {"completion": response['choices'][0]['text']}

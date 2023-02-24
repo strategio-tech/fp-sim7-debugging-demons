@@ -9,8 +9,8 @@ python-decouple = "*"
 flask = "*"
 flask-cors = "*"
 mysql-connector-python = "*"
-jwt = "*"
 gunicorn = "*"
+pyjwt = "*"
 
 [dev-packages]
 

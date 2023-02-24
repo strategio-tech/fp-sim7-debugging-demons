@@ -7,7 +7,7 @@ MYSQL_USER = config('MYSQL_USER')
 MYSQL_PASS = config('MYSQL_PASS')
 MYSQL_DATABASE = config('MYSQL_DATABASE')
 
-def dbConnect(setup):
+def dbConnect(setup = False):
 
   if setup:
     return mysql.connector.connect(
