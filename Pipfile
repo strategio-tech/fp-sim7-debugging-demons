@@ -11,6 +11,8 @@ flask-cors = "*"
 mysql-connector-python = "*"
 gunicorn = "*"
 pyjwt = "*"
+pytest = "*"
+assertpy = "*"
 
 [dev-packages]
 

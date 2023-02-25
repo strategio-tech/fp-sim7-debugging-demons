@@ -11,7 +11,7 @@ TOKEN = config('API_TOKEN')
 ADMIN_PASS = config('ADMIN_PASS')
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)   
 
 @app.route('/')
 def welcome_screen():
@@ -174,3 +174,5 @@ def handlePrompt():
 
 if __name__ == '__main__':
     app.run(port=3030,debug=True)
+    print(TOKEN)
+    print(ADMIN_PASS)
