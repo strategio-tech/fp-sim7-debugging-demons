@@ -40,9 +40,7 @@ def test_handlePrompt(client):
     assert_that(response_data["completion"]).is_instance_of(str)
    
     
-def __main__():
-    flask_client = client()
-    test_handlePrompt(flask_client)
+
 
 
 
