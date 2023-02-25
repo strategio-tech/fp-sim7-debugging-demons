@@ -33,10 +33,21 @@ python3 -m pipenv shell
 
 cd api
 
-gunicorn -b 127.0.0.1:3030 main:app
+Localy for testing: gunicorn -b 127.0.0.1:3030 main:app
+For production: gunicorn -b 0.0.0.0:3030 main:app
 
 ## Launch Dev Server
 
 From root directory run
 
 python3 api/main.py
+
+## Package for AWS Beanstalk
+
+python3 -m pipenv run pip freeze > requirements.txt && python3 -m pipenv run pip install --requirement requirements.txt && zip -r scribble-ai.zip . -x "*.git*" "*.venv*" "*.vscode*" "*.idea*" "*.DS_Store*"
+
+### Setting up EC2 on Amazon Linux
+
+cd /var/app/staging/
+pipenv --python /var/app/venv/staging-LQM1lest/bin/python3 && pipenv shell && pipenv install
+cd api/ && gunicorn -b 0.0.0.0:3030 main:app

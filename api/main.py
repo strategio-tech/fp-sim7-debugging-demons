@@ -24,14 +24,13 @@ def signup():
     data = request.get_json()
     user = data['user'].lower()
 
-    # Process the data
     if not authenticate_password(data['admin_password'], ADMIN_PASS):
       response = {"message": "Invalid admin password"}
       return jsonify(response), 401
 
     hash = hash_password(data['password'])
 
-    # write code to check name doesn't exist in db
+    # check name doesn't exist in db
     mydb = dbConnect()
     mycursor = mydb.cursor()
 
@@ -46,19 +45,19 @@ def signup():
       response = {"message": "This user already exists."}
       return jsonify(response), 400
 
-    # write code to store in db
+    # store in db
     sql = "INSERT INTO users (name, user, password) VALUES (%s, %s, %s)"
     val = (data['name'], user, hash)
     mycursor.execute(sql, val)
 
     mydb.commit()
 
-    # write code to retrieve search history
+    # retrieve search history
     mycursor.execute("SELECT prompt FROM history")
 
     result = mycursor.fetchall()
 
-    #write code to create token
+    # create token
     token = generate_token(user)
 
     # Return a response
@@ -71,7 +70,7 @@ def login():
     data = request.get_json()
     user = data['user'].lower()
 
-    #write code to request password from db
+    # request password from db
     mydb = dbConnect()
     mycursor = mydb.cursor()
 
@@ -129,7 +128,7 @@ def handlePrompt():
     except:
        return jsonify({"message": "Invalid token."}), 401
     
-    # write code to store in db
+    # store in db
     sql = "SELECT prompt FROM history WHERE prompt = %s"
     val = (topic,)
 
