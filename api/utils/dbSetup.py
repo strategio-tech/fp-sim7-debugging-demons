@@ -1,6 +1,5 @@
 from dbConnect import dbConnect
 from decouple import config
-import requests
 
 MYSQL_DATABASE = config('MYSQL_DATABASE')
 

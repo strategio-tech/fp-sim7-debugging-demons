@@ -23,22 +23,24 @@ To generate a token
 ##### MYSQL_DATABASE
 
 ### Before Running API
+
 Run commands from root directory:
 
+First launch virtual env
+pipenv shell
+
 To install dependencies
-$ python3 -m pipenv install
+pipenv install
 
 To setup the database and tables
-$ python3 api/utils/dbSetup.py
+python3 api/utils/dbSetup.py
 
 ### Launching Web Server
-
-python3 -m pipenv shell
 
 cd api
 
 Localy for testing: gunicorn -b 127.0.0.1:3030 main:app
-For production: gunicorn -b 0.0.0.0:3030 main:app
+For production: gunicorn -b 0.0.0.0:80 main:app
 
 ### Launch Dev Server
 
@@ -52,8 +54,6 @@ python3 -m pipenv run pip freeze > requirements.txt && python3 -m pipenv run pip
 
 ### Setting up EC2 on Amazon Linux
 
-nginx -s stop
 cd /var/app/staging/
-pipenv --python /var/app/venv/staging-LQM1lest/bin/python3
-pipenv run pip install --requirement requirements.txt
-cd api/ && pipenv run gunicorn -b 0.0.0.0:80 main:app
+chmod +x init.sh
+./init.sh
