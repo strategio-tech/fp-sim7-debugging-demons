@@ -40,7 +40,7 @@ python3 api/main.py
 
 ### Launching Prod Web Server Manually
 
-cd api
+cd api/
 
 Locally for testing: gunicorn -b 127.0.0.1:3030 main:app
 For production: gunicorn -b 0.0.0.0:80 main:app
@@ -51,6 +51,4 @@ pipenv run build
 
 ### Setting up EC2 on Amazon Linux
 
-cd /var/app/current/
-chmod +x build.sh prod.sh init.sh
-pipenv run start
+cd /var/app/current/ && pipenv run start

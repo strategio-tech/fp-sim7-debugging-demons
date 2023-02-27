@@ -21,6 +21,6 @@ pyjwt = "*"
 python_full_version = "3.8.16"
 
 [scripts]
-start = "./init.sh"
-build = "./build.sh"
+start = "nginx -s stop && cd /var/app/current/ && pipenv run pip install --requirement requirements.txt && cd api/ && pipenv run gunicorn -b 0.0.0.0:80 main:app"
+build = 'python3 -m pipenv run pip freeze > requirements.txt && python3 -m pipenv run pip install --requirement requirements.txt && zip -r scribble-ai.zip . -x "*.git*" "*.venv*" "*.vscode*" "*.idea*" "*.DS_Store*"'
 prod = "./prod.sh"

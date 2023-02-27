@@ -1,7 +1,7 @@
 #! /bin/bash
 
-chmod +x ./build.sh
-./build.sh
+pipenv run build
+
 git add .
 git commit -m 'automated commit'
 git push
