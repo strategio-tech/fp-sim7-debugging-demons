@@ -1,8 +1,9 @@
 # Scribble-AI
 
-
-
 ## Initial Setup
+
+### Permissions for scripts
+chmod +x build.sh prod.sh init.sh
 
 ### Environment Variables
 Create a .env file with the following variables:
@@ -24,23 +25,12 @@ To generate a token
 
 ### Before Running API
 
-Run commands from root directory:
-
-First launch virtual env
-pipenv shell
-
-To install dependencies
-pipenv install
-
 To setup the database and tables
 python3 api/utils/dbSetup.py
 
-### Launching Web Server
+### To start production server 
 
-cd api
-
-Localy for testing: gunicorn -b 127.0.0.1:3030 main:app
-For production: gunicorn -b 0.0.0.0:80 main:app
+pipenv run start
 
 ### Launch Dev Server
 
@@ -48,12 +38,19 @@ From root directory run
 
 python3 api/main.py
 
+### Launching Prod Web Server Manually
+
+cd api
+
+Locally for testing: gunicorn -b 127.0.0.1:3030 main:app
+For production: gunicorn -b 0.0.0.0:80 main:app
+
 ### Package for AWS Beanstalk
 
-python3 -m pipenv run pip freeze > requirements.txt && python3 -m pipenv run pip install --requirement requirements.txt && zip -r scribble-ai.zip . -x "*.git*" "*.venv*" "*.vscode*" "*.idea*" "*.DS_Store*"
+pipenv run build
 
 ### Setting up EC2 on Amazon Linux
 
-cd /var/app/staging/
-chmod +x init.sh
-./init.sh
+cd /var/app/current/
+chmod +x build.sh prod.sh init.sh
+pipenv run start

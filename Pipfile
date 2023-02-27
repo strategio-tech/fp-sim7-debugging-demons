@@ -10,12 +10,17 @@ flask = "*"
 flask-cors = "*"
 mysql-connector-python = "*"
 gunicorn = "*"
-pyjwt = "*"
 pytest = "*"
 assertpy = "*"
 bcrypt = "*"
+pyjwt = "*"
 
 [dev-packages]
 
 [requires]
 python_full_version = "3.8.16"
+
+[scripts]
+start = "./init.sh"
+build = "./build.sh"
+prod = "./prod.sh"
