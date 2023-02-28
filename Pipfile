@@ -21,6 +21,6 @@ pyjwt = "*"
 python_full_version = "3.8.16"
 
 [scripts]
-start = "./init.sh"
-build = "./build.sh"
-prod = "./prod.sh"
+start = "./scripts/init.sh"
+build = "./scripts/build.sh"
+prod = "./scripts/prod.sh"
