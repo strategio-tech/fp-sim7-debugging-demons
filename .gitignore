@@ -2,3 +2,6 @@
 .env
 .DS_Store
 scribble-ai.zip
+.pytest_cache
+__pycache__
+.pyc
