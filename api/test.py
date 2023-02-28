@@ -1,17 +1,18 @@
 import json
 import pytest
+from decouple import config
 from assertpy import assert_that
 import requests
-import main
+from api.main import app
 
 
 
-# TOKEN = config('API_TOKEN')
+#TOKEN = config('API_TOKEN')
 
 @pytest.fixture
 def client():
-    main.app.config['TESTING'] = True
-    with main.app.test_client() as client:
+    app.config['TESTING'] = True
+    with app.test_client() as client:
         yield client 
         
 
@@ -24,6 +25,8 @@ def test_handlePrompt(client):
         "key_points": ["Data Algorithms", "Fibonacci"],
         "token": "valid_token"
     }
+   
+   # headers = {"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"}
     headers = {"Content-Type": "application/json"}
 
     # Send a POST request to the server
@@ -38,6 +41,11 @@ def test_handlePrompt(client):
     
     # Check that the value of the completion key is type of string.
     assert_that(response_data["completion"]).is_instance_of(str)
+
+
+   
+    
+
    
     
 
