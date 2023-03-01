@@ -7,8 +7,17 @@ This project is designed to be user-friendly and easy to use, even for those wit
 
 Scribble-AI is an AI-powered writing assistant that generates technical blog posts and "this week I learned" (TWIL) posts. This repository contains the code for the backend API as well as the front-end user interface.
 
-### Environment Variables
-Create a .env file with the following variables OR you can enter the environment variables into Beanstalk:
+<br>
+
+# Backend Setup
+## Permissions for scripts
+
+Make sure the shell scripts have the necessary permissions:
+`chmod +x build.sh prod.sh init.sh`
+
+## Environment Variables
+
+Create a `.env` file with the following variables:
 
 #### API_TOKEN
 To access GPT
@@ -17,7 +26,7 @@ To access GPT
 To create a new user
 
 #### SALT
-To generate jwt
+To generate a token
 
 #### For MySQL
 
@@ -26,23 +35,40 @@ MYSQL_USER
 MYSQL_PASS
 MYSQL_DATABASE
 
-To setup the database and tables
-`pipenv run python3 api/utils/dbSetup.py`
+## Database Setup
+
+To set up the database and tables:
+`pipenv shell`
+`python3 api/utils/dbSetup.py`
+
+## Start Server
+
+To start the production server:
+`pipenv run start`
 
 To launch the development server:
-`python3 api/main.py`
+`cd api/`
+`python3 main.py`
 
 ## Launching Prod Web Server Manually
 
-### Package for AWS Beanstalk
+To launch the production server manually:
+`cd api/`
+`gunicorn -b 0.0.0.0:80 main:app`
 
-This will create requirements.txt and a .zip file you can upload to beanstalk.
+## Package for AWS Beanstalk
 
+To package for AWS Beanstalk:
 `pipenv run build`
 
-### Booting up EC2 on Amazon Linux
+<br>
 
-SSH into EC2 instance created by beanstalk and run command:
+# Frontend Setup
+## Install Dependencies
+
+To install the required dependencies:
+`cd client`
+`npm install`
 
 ## Deploy Development Server
 
