@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 from decouple import config
 from flask_cors import CORS
 import requests
-from api.utils.util import generate_token, decode_token
+from utils.util import generate_token, decode_token
 
-from api.utils.dbConnect import dbConnect
-from api.utils.util import authenticate_password, hash_password
+from utils.dbConnect import dbConnect
+from utils.util import authenticate_password, hash_password
 
 TOKEN = config('API_TOKEN')
 ADMIN_PASS = config('ADMIN_PASS')

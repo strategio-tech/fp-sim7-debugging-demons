@@ -3,7 +3,7 @@ import pytest
 from decouple import config
 from assertpy import assert_that
 import requests
-from api.main import app
+from main import app
 
 
 
