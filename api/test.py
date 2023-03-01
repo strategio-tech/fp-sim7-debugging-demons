@@ -6,6 +6,8 @@ import requests
 from main import app
 
 #TOKEN = config('API_TOKEN')
+ADMIN_PASSWORD = config('ADMIN_PASS')
+headers = {"Content-Type": "application/json"}
 
 @pytest.fixture
 def client():
@@ -61,6 +63,54 @@ def test_handlePrompt_invalid_token(client):
     assert_that(response_data['message']).is_equal_to("Invalid token.")
     
    
+    # assert response.json["name"] == "testuser"
+    # assert response.json["token"] is not None
+    # assert len(response.json["promptHistory"]) >= 0 
+    
+def test_signup_existing_user(client):
+
+    # Prepare duplicatedata for another request with the same username
+    data_duplicate = {
+        "name": "Other Test User",
+        "user": "testUser",
+        "password": "mysecretpassword",
+        "admin_password": ADMIN_PASSWORD
+    }
+  
+
+    # Make another POST request to the signup endpoint with the same username
+    response_duplicate = client.post('/signup', data=json.dumps(data_duplicate), headers=headers)
+   
+    # Check that the response status code is 400 because the user already exists and has the correct message
+    assert_that(response_duplicate.status_code).is_equal_to(requests.codes.bad_request)
+    
+    # Check that the response has the correct message
+    response_duplicate_data = json.loads(response_duplicate.get_data(as_text=True))
+    assert_that(response_duplicate_data["message"]).is_equal_to("This user already exists.")
+    
+    # assert response_duplicate_data.status_code == 400
+    # assert response_duplicate.json["message"] == "This user already exists."
+
+def test_signup_invalid_admin_password(client):
+    # Mock data for a request with an invalid admin password
+    data = {
+        "name": "Other Test User2",
+        "user": "testUser2",
+        "password": "mysecretpassword",
+        "admin_password": "wrong password"
+    }   
+    
+    # Make a POST request to the signup endpoint with the wrong password
+    
+    response= client.post('/signup', data=json.dumps(data), headers=headers)
+
+    # Check that the response status code is 401 because the password is incorrect and has the correct message
+    assert_that(response.status_code).is_equal_to(requests.codes.unauthorized)
+    
+   
+    # Check that the response data has the correct message
+    response_data = json.loads(response.get_data(as_text=True))
+    assert_that(response_data["message"]).is_equal_to("Invalid admin password")
     
 
    
