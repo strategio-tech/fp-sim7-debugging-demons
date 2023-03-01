@@ -5,8 +5,6 @@ from assertpy import assert_that
 import requests
 from main import app
 
-
-
 #TOKEN = config('API_TOKEN')
 
 @pytest.fixture
@@ -20,10 +18,10 @@ def client():
 def test_handlePrompt_ok(client):
     # Prepare data for request
     data = {
-        "user": "TestUser",
+        "user": "eddie",
         "topic": "TestTopic",
         "key_points": ["Data Algorithms", "Fibonacci"],
-        "token": "valid_token" #change this for a valid token retrieve for the DB
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZWRkaWUiLCJzYWx0Ijoic2RmJCVzZ29oQCU1NkZTIn0.YtNEhxGDQ3xjncO8i1btg2ExZOV6BMTwoqX5LVcJKG0" #change this for a valid token retrieve for the DB
     }
    
     headers = {"Content-Type": "application/json"}
@@ -44,10 +42,10 @@ def test_handlePrompt_ok(client):
 def test_handlePrompt_invalid_token(client):
     # Prepare data for request
     data = {
-        "user": "TestUser",
+        "user": "eddie",
         "topic": "TestTopic",
         "key_points": ["Data Algorithms", "Fibonacci"],
-        "token": "invalid_token"
+        "token": "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZWRkaWUiLCJzYWx0Ijoic2RmJCVzZ29oQCU1NkZTIn0.YtNEhxGDQ3xjncO8i1btg2ExZOV6BMTwoqX5LVcJKG0"
     }
    
     headers = {"Content-Type": "application/json"}
