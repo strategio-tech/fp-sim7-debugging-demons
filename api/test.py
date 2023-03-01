@@ -3,7 +3,7 @@ import pytest
 from decouple import config
 from assertpy import assert_that
 import requests
-from main import app
+from main import app, delete_user
 
 #TOKEN = config('API_TOKEN')
 ADMIN_PASSWORD = "ddemons"
@@ -109,6 +109,8 @@ def test_signup_existing_user(client):
     # Check that the response has the correct message
     response_duplicate_data = json.loads(response_duplicate.get_data(as_text=True))
     assert_that(response_duplicate_data["message"]).is_equal_to("This user already exists.")
+    
+    delete_user("testUser")
   
 
 def test_signup_invalid_admin_password(client):
