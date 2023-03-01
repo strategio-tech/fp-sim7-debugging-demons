@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css" />
+    <title>ScribbleAi</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="logo">
+        <h2><a href="./Home.html">ScribbleAi</a></h2>
+      </div>
+
+      <div class="nav_items">
+        <ul>
+          <li><a href="./Home.html">Home</a></li>
+          <li><a id="logout" href="./Login.html">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blog_form">
+      <form>
+        <div class="form_title">
+          <h3>Tell us more about your blog</h3>
+          <img src="./images/Line 5.png" alt="" />
+        </div>
+
+        <div class="blog_inputs">
+          <input type="text" name="topic" placeholder="Topic" /> <br />
+          <br />
+          <input type="text" id="topic" name="topic" placeholder="Key Point" />
+          <br />
+          <br />
+          <input type="text" id="topic" name="topic" placeholder="Key Point" />
+          <br />
+          <br />
+          <input type="text" id="topic" name="topic" placeholder="Key Point" />
+          <br />
+
+          <a href="./GeneratedBlog.html">Generate</a>
+          <a href="./Dashboard.html" class="go_back">Go Back</a>
+        </div>
+      </form>
+    </div>
+    <script src="./logout.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

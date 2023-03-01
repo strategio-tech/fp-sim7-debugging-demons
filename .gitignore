@@ -5,3 +5,5 @@ scribble-ai.zip
 .pytest_cache
 __pycache__
 .pyc
+client/node_modules
+.node_modules
