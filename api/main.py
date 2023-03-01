@@ -8,25 +8,8 @@ from utils.util import generate_token, decode_token
 from utils.dbConnect import dbConnect
 from utils.util import authenticate_password, hash_password
 
-TOKEN = ''
-ADMIN_PASS = ''
-
-try:
-  TOKEN = config('API_TOKEN')
-except:
-   print('fetching OS env variables')
-
-try:
-  ADMIN_PASS = config('ADMIN_PASS')
-except:
-   print('fetching OS env variables')
-
-if not TOKEN:
-   TOKEN = os.environ.get('API_TOKEN')
-
-if not ADMIN_PASS:
-   ADMIN_PASS = os.environ.get('ADMIN_PASS')
-
+TOKEN = config('API_TOKEN')
+ADMIN_PASS = config('ADMIN_PASS')
 
 app = Flask(__name__)
 CORS(app)   

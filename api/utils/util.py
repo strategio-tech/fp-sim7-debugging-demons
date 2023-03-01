@@ -3,17 +3,7 @@ from decouple import config
 import bcrypt
 import jwt
 
-SALT=''
-
-try:
-  TOKEN = config('SALT')
-except:
-   print('fetching OS env variables')
-
-
-if not SALT:
-   SALT = os.environ.get('SALT')
-
+SALT = config('SALT')
 
 def hash_password(password):
 
