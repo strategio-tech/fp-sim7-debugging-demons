@@ -1,18 +1,14 @@
-# ScribbleAi
+# Scribble-AI
+Welcome to my project! This is a full stack application that leverages the power of GPT-3 to generate technical blogs and LinkedIn posts with ease. With this application, you can effortlessly create high-quality content for your blog or social media page, without spending hours researching and writing.
+
+To get started, follow the instructions in the README.md file to configure your environment variables and generate build artifacts for Beanstalk. Once you have completed these steps, you'll be ready to start generating content using GPT-3.
+
+This project is designed to be user-friendly and easy to use, even for those with little or no programming experience. Whether you're a blogger, social media manager, or just looking to create compelling content, this application is the perfect tool for you. So why wait? Let's get started and start creating amazing content today!
 
 Scribble-AI is an AI-powered writing assistant that generates technical blog posts and "this week I learned" (TWIL) posts. This repository contains the code for the backend API as well as the front-end user interface.
 
-<br>
-
-# Backend Setup
-## Permissions for scripts
-
-Make sure the shell scripts have the necessary permissions:
-`chmod +x build.sh prod.sh init.sh`
-
-## Environment Variables
-
-Create a `.env` file with the following variables:
+### Environment Variables
+Create a .env file with the following variables OR you can enter the environment variables into Beanstalk:
 
 #### API_TOKEN
 To access GPT
@@ -21,7 +17,7 @@ To access GPT
 To create a new user
 
 #### SALT
-To generate a token
+To generate jwt
 
 #### For MySQL
 
@@ -30,40 +26,23 @@ MYSQL_USER
 MYSQL_PASS
 MYSQL_DATABASE
 
-## Database Setup
-
-To set up the database and tables:
-`pipenv shell`
-`python3 api/utils/dbSetup.py`
-
-## Start Server
-
-To start the production server:
-`pipenv run start`
+To setup the database and tables
+`pipenv run python3 api/utils/dbSetup.py`
 
 To launch the development server:
-`cd api/`
-`python3 main.py`
+`python3 api/main.py`
 
 ## Launching Prod Web Server Manually
 
-To launch the production server manually:
-`cd api/`
-`gunicorn -b 0.0.0.0:80 main:app`
+### Package for AWS Beanstalk
 
-## Package for AWS Beanstalk
+This will create requirements.txt and a .zip file you can upload to beanstalk.
 
-To package for AWS Beanstalk:
 `pipenv run build`
 
-<br>
+### Booting up EC2 on Amazon Linux
 
-# Frontend Setup
-## Install Dependencies
-
-To install the required dependencies:
-`cd client`
-`npm install`
+SSH into EC2 instance created by beanstalk and run command:
 
 ## Deploy Development Server
 
