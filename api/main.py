@@ -14,7 +14,7 @@ CORS(app)
 
 @app.route('/')
 def welcome_screen():
-   return 'Hello, World!'
+   return 'Hello, Penny!'
 
 @app.route('/signup', methods=['POST'])
 def signup():
