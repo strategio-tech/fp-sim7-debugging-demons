@@ -1011,4 +1011,22 @@ a {
         margin-right: 1rem;
         padding-top: 13px !important;
     }
+}
+
+@media screen and (max-height: 700px) {
+  .choose__all {
+    margin-top: 0;
   }
+  
+  .blog_form {
+    margin-top: 0;
+  }
+  
+  .generated_blog_container {
+    margin-top: 2%;
+  }
+  
+  .generated_twil_container {
+    margin-top: 2%;
+  }
+}
