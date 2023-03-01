@@ -2,6 +2,7 @@
 
 Scribble-AI is an AI-powered writing assistant that generates technical blog posts and "this week I learned" (TWIL) posts. This repository contains the code for the backend API as well as the front-end user interface.
 
+<br>
 
 # Backend Setup
 ## Permissions for scripts
@@ -55,6 +56,7 @@ To launch the production server manually:
 To package for AWS Beanstalk:
 `pipenv run build`
 
+<br>
 
 # Frontend Setup
 ## Install Dependencies
@@ -71,6 +73,8 @@ To deploy the development server:
 3.  Click the "Go Live" button located at the bottom of the editor.
 4.  This will launch a local development server and automatically open the file in your default browser.
 5.  If any changes are made in the frontend code, it will automatically refresh the page in your browser and reflect the changes.
+
+<br>
 
 # Setting up EC2 on Amazon Linux
 To set up the EC2:
