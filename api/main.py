@@ -154,11 +154,11 @@ def handlePrompt():
     prompt = f"Starting with the title, write a technical blog from the point of view of a technologist in training about {data['topic']}. Include the following talking points: {talking_points}. Make sure the end has a call to action to subscribe to your blog."
     
     # Make request to GPT
-    url = 'https://api.openai.com/v1/completions'
+    url = 'https://api.openai.com/v1/chat/completions'
     body = {
-    "model": "text-ada-001",
-    "prompt": prompt,
-    "max_tokens": 12,
+    "model": "gpt-3.5-turbo",
+    "messages":[{ "role": "user", "content": prompt}],
+    "max_tokens": 1000,
     "temperature": 1
     }
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"}
@@ -167,8 +167,51 @@ def handlePrompt():
     response = response.json()
 
     # Return a response
-    response = {"completion": response['choices'][0]['text']}
+    response = {"completion": response['choices'][0]['message']['content']}
     return jsonify(response)
+
+@app.route('/twil', methods=['POST'])
+def handleTwil():
+  # Get the data from the POST request
+  data = request.get_json()
+  user = data['user'].lower()
+
+  # Decode token
+  try:
+    _user = decode_token(data['token'])
+
+    if _user != user:
+      return jsonify({"message": "Invalid token."}), 401
+  except:
+     return jsonify({"message": "Invalid token."}), 401
+  
+  # Generate prompt
+  talking_points = []
+
+  if len(data['key_points']) > 0:
+    for point in data['key_points']:
+      talking_points.append(point)
+    
+  ", ".join(talking_points)
+
+  prompt = f"Write a three paragraph linkedin post summarizing what I learned this week. What I learned this week includes: {talking_points}. End the post with tags."
+
+  # Make request to GPT
+  url = 'https://api.openai.com/v1/chat/completions'
+  body = {
+  "model": "gpt-3.5-turbo",
+  "messages":[{ "role": "user", "content": prompt}],
+  "max_tokens": 300,
+  "temperature": 1
+  }
+  headers = {"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"}
+
+  response = requests.post(url, json=body, headers=headers)
+  response = response.json()
+
+  # Return a response
+  response = {"completion": response['choices'][0]['message']['content']}
+  return jsonify(response)
 
 if __name__ == '__main__':
     app.run(port=3030,debug=True)

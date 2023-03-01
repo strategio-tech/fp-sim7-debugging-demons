@@ -13,11 +13,12 @@ Scribble-AI is an AI-powered writing assistant that generates technical blog pos
 ## Permissions for scripts
 
 Make sure the shell scripts have the necessary permissions:
-`chmod +x build.sh prod.sh init.sh`
+`chmod +x scripts/*`
 
 ## Environment Variables
 
 Create a `.env` file with the following variables:
+(These can be added to Beanstalk directly for production)
 
 #### API_TOKEN
 To access GPT
@@ -38,8 +39,7 @@ MYSQL_DATABASE
 ## Database Setup
 
 To set up the database and tables:
-`pipenv shell`
-`python3 api/utils/dbSetup.py`
+`pipenv run python3 api/utils/dbSetup.py`
 
 ## Start Server
 
@@ -47,8 +47,7 @@ To start the production server:
 `pipenv run start`
 
 To launch the development server:
-`cd api/`
-`python3 main.py`
+`python3 api/main.py`
 
 ## Launching Prod Web Server Manually
 
@@ -60,6 +59,10 @@ To launch the production server manually:
 
 To package for AWS Beanstalk:
 `pipenv run build`
+
+## Setting up EC2 on Amazon Linux
+To set up the EC2:
+`cd /var/app/current/ && chmod +x scripts/* && pipenv run start`
 
 <br>
 
@@ -80,7 +83,3 @@ To deploy the development server:
 5.  If any changes are made in the frontend code, it will automatically refresh the page in your browser and reflect the changes.
 
 <br>
-
-# Setting up EC2 on Amazon Linux
-To set up the EC2:
-`cd /var/app/current/ && chmod +x scripts/* && pipenv run start`
