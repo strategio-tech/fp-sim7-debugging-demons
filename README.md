@@ -1,6 +1,8 @@
 # Scribble-AI
 Welcome to my project! This is a full stack application that leverages the power of GPT-3 to generate technical blogs and LinkedIn posts with ease. With this application, you can effortlessly create high-quality content for your blog or social media page, without spending hours researching and writing.
 
+![app](client/app.png)
+
 To get started, follow the instructions in the README.md file to configure your environment variables and generate build artifacts for Beanstalk. Once you have completed these steps, you'll be ready to start generating content using GPT-3.
 
 This project is designed to be user-friendly and easy to use, even for those with little or no programming experience. Whether you're a blogger, social media manager, or just looking to create compelling content, this application is the perfect tool for you. So why wait? Let's get started and start creating amazing content today!
