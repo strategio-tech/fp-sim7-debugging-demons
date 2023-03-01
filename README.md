@@ -52,6 +52,4 @@ pipenv run build
 
 ### Setting up EC2 on Amazon Linux
 
-cd /var/app/current/
-chmod +x ./scripts/build.sh ./scripts/prod.sh ./scripts/init.sh
-pipenv run start
+cd /var/app/current/ && chmod +x scripts/* && pipenv run start
