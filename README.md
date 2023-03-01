@@ -50,6 +50,18 @@ For production: gunicorn -b 0.0.0.0:80 main:app
 
 pipenv run build
 
+### Front End Setup
+
+npm install
+
+### Deploy Front End Development Server with Live Server
+
+Install Live Server extension
+Open the Home.html file located in the client folder
+Click the "Go Live" button located at the bottom of the editor
+This will launch a local development server and automatically open the file in your default browser
+If any changes are made in the front end code, it will automatically refresh the page in your browser and reflect the changes
+
 ### Setting up EC2 on Amazon Linux
 
 cd /var/app/current/ && chmod +x scripts/* && pipenv run start
