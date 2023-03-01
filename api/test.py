@@ -17,16 +17,15 @@ def client():
         
 
 
-def test_handlePrompt(client):
+def test_handlePrompt_ok(client):
     # Prepare data for request
     data = {
         "user": "TestUser",
         "topic": "TestTopic",
         "key_points": ["Data Algorithms", "Fibonacci"],
-        "token": "valid_token"
+        "token": "valid_token" #change this for a valid token retrieve for the DB
     }
    
-   # headers = {"Content-Type": "application/json", "Authorization": f"Bearer {TOKEN}"}
     headers = {"Content-Type": "application/json"}
 
     # Send a POST request to the server
@@ -42,7 +41,27 @@ def test_handlePrompt(client):
     # Check that the value of the completion key is type of string.
     assert_that(response_data["completion"]).is_instance_of(str)
 
+def test_handlePrompt_invalid_token(client):
+    # Prepare data for request
+    data = {
+        "user": "TestUser",
+        "topic": "TestTopic",
+        "key_points": ["Data Algorithms", "Fibonacci"],
+        "token": "invalid_token"
+    }
+   
+    headers = {"Content-Type": "application/json"}
 
+    # Send a POST request to the server
+    response = client.post('/prompt', data=json.dumps(data), headers=headers) #Not sure if headers if necessary I think no
+
+    # Check that the server returns a 401 status code
+    assert_that(response.status_code).is_equal_to(requests.codes.unauthorized)
+
+    # Check that the server returns a message for the invalid token error
+    response_data = json.loads(response.get_data(as_text=True))
+    assert_that(response_data['message']).is_equal_to("Invalid token.")
+    
    
     
 
