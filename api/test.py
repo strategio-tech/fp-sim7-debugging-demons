@@ -6,7 +6,7 @@ import requests
 from main import app
 
 #TOKEN = config('API_TOKEN')
-ADMIN_PASSWORD = config('ADMIN_PASS')
+ADMIN_PASSWORD = "ddemons"
 headers = {"Content-Type": "application/json"}
 
 @pytest.fixture
