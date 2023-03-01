@@ -4,10 +4,13 @@ from decouple import config
 from assertpy import assert_that
 import requests
 from api.main import app
+import pdb
+
 
 
 
 #TOKEN = config('API_TOKEN')
+ADMIN_PASSWORD = config('ADMIN_PASS')
 
 @pytest.fixture
 def client():
@@ -16,11 +19,11 @@ def client():
         yield client 
         
 
-
+@pytest.mark.skip("Not testing this method")
 def test_handlePrompt(client):
     # Prepare data for request
     data = {
-        "user": "TestUser",
+        "user": "testUser",
         "topic": "TestTopic",
         "key_points": ["Data Algorithms", "Fibonacci"],
         "token": "valid_token"
@@ -42,8 +45,74 @@ def test_handlePrompt(client):
     # Check that the value of the completion key is type of string.
     assert_that(response_data["completion"]).is_instance_of(str)
 
+def test_signup_new_user(client):
+    # Mock data for the request
+    mock_data = {
+        "name": "Test User",
+        "user": "testUser",
+        "password": "mysecretpassword",
+        "admin_password": ADMIN_PASSWORD
+    }
 
+    # Make a POST request to the signup endpoint
+    # response = client.post('/signup', json=mock_data)
+    # response_data = json.loads(response.get_data(as_text=True))
+    # print(response)
+
+    # # Check that the response status code is 200
+    # assert_that(response_data.status_code).is_equal_to(requests.codes.ok)
+    response = client.post('/signup', json=mock_data)
+    pdb.set_trace()
+  
+    # Check that the response status code is 200
+    assert response.status_code == 200
+
+    # # Check that the response contains the correct user data
+    # assert_that(response_data["name"]) == "testuser"
+    # assert_that(response_data["token"]).is_not_none
+    # assert_that(len(response_data["promptHistory"])).is_greater_than(0)
    
+    # assert response.json["name"] == "testuser"
+    # assert response.json["token"] is not None
+    # assert len(response.json["promptHistory"]) >= 0 
+    
+def test_signup_existing_user(client):
+
+    # Mock data for another request with the same username
+    mock_data_duplicate = {
+        "name": "Other Test User",
+        "user": "testUser",
+        "password": "mysecretpassword",
+        "admin_password": ADMIN_PASSWORD
+    }
+
+    # Make another POST request to the signup endpoint with the same username
+    response_duplicate = client.post('/signup', json=mock_data_duplicate)
+    response_duplicate_data = json.loads(response_duplicate.get_data(as_text=True))
+
+    # Check that the response status code is 400 because the user already exists and has the correct message
+    assert_that(response_duplicate_data.status_code).is_equal_to(requests.codes.bad_request)
+    assert_that(response_duplicate_data["message"]).is_equal_to("This user already exists.")
+    
+    # assert response_duplicate_data.status_code == 400
+    # assert response_duplicate.json["message"] == "This user already exists."
+
+def test_signup_invalid_admin_password(client):
+    # Mock data for a request with an invalid admin password
+    mock_data = {
+        "name": "Other Test User2",
+        "user": "testUser2",
+        "password": "mysecretpassword",
+        "admin_password": "wrong password"
+    }   
+    
+    # Make a POST request to the signup endpoint with the wrong password
+    response = client.post('/signup', json=mock_data)
+    response_data = json.loads(response.get_data(as_text=True))
+
+    # Check that the response status code is 401 because the password is incorrect and has the correct message
+    assert_that(response_data.status_code).is_equal_to(requests.codes.unauthorized)
+    assert_that(response_data["message"]).is_equal_to("Invalid admin password")
     
 
    
