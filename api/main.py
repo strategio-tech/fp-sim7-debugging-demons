@@ -3,7 +3,6 @@ from decouple import config
 from flask_cors import CORS
 import requests
 from utils.util import generate_token, decode_token
-
 from utils.dbConnect import dbConnect
 from utils.util import authenticate_password, hash_password
 
@@ -173,5 +172,3 @@ def handlePrompt():
 
 if __name__ == '__main__':
     app.run(port=3030,debug=True)
-    print(TOKEN)
-    print(ADMIN_PASS)
