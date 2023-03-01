@@ -11,6 +11,7 @@ import pdb
 
 #TOKEN = config('API_TOKEN')
 ADMIN_PASSWORD = config('ADMIN_PASS')
+headers = {"Content-Type": "application/json"}
 
 @pytest.fixture
 def client():
@@ -46,31 +47,35 @@ def test_handlePrompt(client):
     assert_that(response_data["completion"]).is_instance_of(str)
 
 def test_signup_new_user(client):
-    # Mock data for the request
-    mock_data = {
+    # Prepare data for the request
+    data = {
         "name": "Test User",
         "user": "testUser",
         "password": "mysecretpassword",
         "admin_password": ADMIN_PASSWORD
     }
+    # headers = {"Content-Type": "application/json"}
 
     # Make a POST request to the signup endpoint
+    response = client.post('/signup', data=json.dumps(data), headers=headers)
+    
     # response = client.post('/signup', json=mock_data)
-    # response_data = json.loads(response.get_data(as_text=True))
+    #
     # print(response)
 
-    # # Check that the response status code is 200
-    # assert_that(response_data.status_code).is_equal_to(requests.codes.ok)
-    response = client.post('/signup', json=mock_data)
-    pdb.set_trace()
-  
     # Check that the response status code is 200
-    assert response.status_code == 200
+    assert_that(response.status_code).is_equal_to(requests.codes.ok)
+    
+  
+  
+    # # Check that the response status code is 200
+    # assert response.status_code == 200
 
-    # # Check that the response contains the correct user data
-    # assert_that(response_data["name"]) == "testuser"
-    # assert_that(response_data["token"]).is_not_none
-    # assert_that(len(response_data["promptHistory"])).is_greater_than(0)
+     # Check that the response contains the correct user data
+    response_data = json.loads(response.get_data(as_text=True))
+    assert_that(response_data["name"]) == "testuser"
+    assert_that(response_data["token"]).is_not_none
+    assert_that(len(response_data["promptHistory"])).is_greater_than(0)
    
     # assert response.json["name"] == "testuser"
     # assert response.json["token"] is not None
@@ -78,20 +83,23 @@ def test_signup_new_user(client):
     
 def test_signup_existing_user(client):
 
-    # Mock data for another request with the same username
-    mock_data_duplicate = {
+    # Prepare duplicatedata for another request with the same username
+    data_duplicate = {
         "name": "Other Test User",
         "user": "testUser",
         "password": "mysecretpassword",
         "admin_password": ADMIN_PASSWORD
     }
+  
 
     # Make another POST request to the signup endpoint with the same username
-    response_duplicate = client.post('/signup', json=mock_data_duplicate)
-    response_duplicate_data = json.loads(response_duplicate.get_data(as_text=True))
-
+    response_duplicate = client.post('/signup', data=json.dumps(data_duplicate), headers=headers)
+   
     # Check that the response status code is 400 because the user already exists and has the correct message
-    assert_that(response_duplicate_data.status_code).is_equal_to(requests.codes.bad_request)
+    assert_that(response_duplicate.status_code).is_equal_to(requests.codes.bad_request)
+    
+    # Check that the response has the correct message
+    response_duplicate_data = json.loads(response_duplicate.get_data(as_text=True))
     assert_that(response_duplicate_data["message"]).is_equal_to("This user already exists.")
     
     # assert response_duplicate_data.status_code == 400
@@ -99,7 +107,7 @@ def test_signup_existing_user(client):
 
 def test_signup_invalid_admin_password(client):
     # Mock data for a request with an invalid admin password
-    mock_data = {
+    data = {
         "name": "Other Test User2",
         "user": "testUser2",
         "password": "mysecretpassword",
@@ -107,11 +115,15 @@ def test_signup_invalid_admin_password(client):
     }   
     
     # Make a POST request to the signup endpoint with the wrong password
-    response = client.post('/signup', json=mock_data)
-    response_data = json.loads(response.get_data(as_text=True))
+    
+    response= client.post('/signup', data=json.dumps(data), headers=headers)
 
     # Check that the response status code is 401 because the password is incorrect and has the correct message
-    assert_that(response_data.status_code).is_equal_to(requests.codes.unauthorized)
+    assert_that(response.status_code).is_equal_to(requests.codes.unauthorized)
+    
+   
+    # Check that the response data has the correct message
+    response_data = json.loads(response.get_data(as_text=True))
     assert_that(response_data["message"]).is_equal_to("Invalid admin password")
     
 
