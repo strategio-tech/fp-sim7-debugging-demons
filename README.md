@@ -52,6 +52,7 @@ pipenv run build
 
 ### Front End Setup
 
+cd client
 npm install
 
 ### Deploy Front End Development Server with Live Server
