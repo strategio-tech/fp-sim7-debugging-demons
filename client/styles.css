@@ -1015,11 +1015,15 @@ a {
 
 @media screen and (max-height: 700px) {
   .choose__all {
-    margin-top: 0;
+    margin-top: 2%;
   }
   
   .blog_form {
     margin-top: 0;
+  }
+  
+  .blog_form form {
+    margin-top: 3.5rem;
   }
   
   .generated_blog_container {
@@ -1028,5 +1032,17 @@ a {
   
   .generated_twil_container {
     margin-top: 2%;
+  }
+  
+  .container {
+    margin-top: 0;
+  }
+  
+  .sign__back {
+    margin-top: 2.8rem;
+  }
+  
+  .sign__form {
+    margin-top: 2.8rem;
   }
 }
