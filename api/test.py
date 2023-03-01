@@ -110,7 +110,7 @@ def test_signup_existing_user(client):
     response_duplicate_data = json.loads(response_duplicate.get_data(as_text=True))
     assert_that(response_duplicate_data["message"]).is_equal_to("This user already exists.")
     
-    delete_user("testUser")
+    delete_user("testuser")
   
 
 def test_signup_invalid_admin_password(client):

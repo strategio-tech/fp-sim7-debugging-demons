@@ -217,7 +217,7 @@ def handleTwil():
 def delete_user(user):
   mydb = dbConnect()
   mycursor = mydb.cursor()
-  sql = "DELETE * FROM users WHERE user = %s"
+  sql = "DELETE FROM users WHERE user = %s"
   val = (user,)
 
   mycursor.execute(sql, val)
