@@ -6,24 +6,21 @@ form.addEventListener("submit", (event) => {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
 
-  const topic = form.topic.value;
-  const keyPoints = [form.keyPoint1.value, form.keyPoint2.value, form.keyPoint3.value].filter(Boolean);
+  const keyPoints = [form.topic1.value, form.topic2.value, form.topic3.value].filter(Boolean);
 
-  axios.post("/prompt", {
+  axios.post("/twil", {
     user,
     token,
-    topic,
     key_points: keyPoints,
   })
     .then((response) => {
       console.log(response.data.completion);
-      const generatedBlogContent = response.data.completion;
+      const generatedTwilContent = response.data.completion;
       const urlParams = new URLSearchParams();
-      urlParams.set("generatedBlogContent", generatedBlogContent);
-      window.location.href = `./GeneratedBlog.html?${urlParams.toString()}`;
+      urlParams.set("generatedTwilContent", generatedTwilContent);
+      window.location.href = `./GeneratedTwil.html?${urlParams.toString()}`;
     })
     .catch((error) => {
       console.error(error);
     });
 });
-

@@ -8,7 +8,7 @@ form.addEventListener('submit', event => {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  axios.post('scribble-ai-stack-sampledb-ackzejcb7nss.ci89jwbnuivr.us-east-1.rds.amazonaws.com/login', {
+  axios.post('/login', {
     user: username,
     password
   })
