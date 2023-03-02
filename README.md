@@ -11,6 +11,8 @@ Scribble-AI is an AI-powered writing assistant that generates technical blog pos
 
 <br>
 
+![architecture](client/architcture.png)
+
 # Backend Setup
 ## Permissions for scripts
 
