@@ -22,6 +22,6 @@ form.addEventListener('submit', event => {
     // handle error response
     console.log(error.response.data);
     // display an error message to the user
-    alert('There was an error, try again later');
+    alert('There was an error, try again later.');
   });
 });
