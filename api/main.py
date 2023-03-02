@@ -10,7 +10,7 @@ TOKEN = config('API_TOKEN')
 ADMIN_PASS = config('ADMIN_PASS')
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3030", "http://scribble-ai-stack-mys3bucket-1ibphpeyimd2i.s3-website-us-east-1.amazonaws.com"])   
+CORS(app, origins=["http://localhost:3030", "http://scribble-ai-stack-mys3bucket-1ibphpeyimd2i.s3-website-us-east-1.amazonaws.com", "http://debuggingdemons-frontend.s3-website-us-east-1.amazonaws.com/"])   
 
 @app.route('/')
 def welcome_screen():
