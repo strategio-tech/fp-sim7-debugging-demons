@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from decouple import config
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import requests
 from utils.util import generate_token, decode_token
 from utils.dbConnect import dbConnect
