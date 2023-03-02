@@ -50,13 +50,20 @@
           >
             <h2 class="Create__title mt-5">Create Account</h2>
             <form id="signup_form">
-              <input type="text" id="name" name="name" placeholder="Name" />
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                placeholder="Name" 
+                required
+                />
 
               <input
                 type="text"
                 id="username"
                 name="username"
                 placeholder="Username"
+                required
               />
 
               <input
@@ -64,6 +71,7 @@
                 id="password"
                 name="password"
                 placeholder="Password"
+                required
               />
 
               <input
@@ -71,9 +79,11 @@
                 id="admin-password"
                 name="admin-password"
                 placeholder="Admin Password"
+                required
               />
 
-              <a href="#" class="signIn_btn mt-3">Sign Up</a>
+              <button type="submit" class="signIn_btn mt-3">Sign Up</button>
+
               <p class="sign__login my-3">
                 Already have an account?<a href="./Login.html"
                   ><b> &nbsp; Login</b></a

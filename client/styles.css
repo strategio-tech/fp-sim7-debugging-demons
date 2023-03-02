@@ -553,7 +553,7 @@ a {
 
 
 
-/* Blog form page styling */
+/* Blog/Twil form page styling */
 
 .blog_form {  
   margin-top: 8%;
@@ -609,7 +609,7 @@ a {
   outline: none;
 }
 
-.blog_inputs a {
+/* .blog_inputs.generate_button {
   text-decoration: none;
   color: #fff;
   margin-top: 1rem;
@@ -618,6 +618,26 @@ a {
   border-radius: 5px;
   justify-content: center;
   background-color: #36c4f2;
+} */
+
+.generate_button {
+  text-decoration: none;
+  font-size: 1.4rem;
+  color: #fff;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  display: flex;
+  padding: 6px 0px;
+  border-radius: 5px;
+  justify-content: center;
+  background-color: #36c4f2;
+  border: none; /* remove the default button border */
+  cursor: pointer; /* change the cursor to pointer on hover */
+}
+
+.generate_button:hover {
+  background-color: #F47F9E;
 }
 
 .go_back {
