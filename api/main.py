@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from decouple import config
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 import requests
 from utils.util import generate_token, decode_token
 from utils.dbConnect import dbConnect
@@ -10,15 +10,13 @@ TOKEN = config('API_TOKEN')
 ADMIN_PASS = config('ADMIN_PASS')
 
 app = Flask(__name__)
-CORS(app)   
+CORS(app, origins=["http://localhost:3030", "http://scribble-ai-stack-mys3bucket-1ibphpeyimd2i.s3-website-us-east-1.amazonaws.com"])   
 
 @app.route('/')
-@cross_origin()
 def welcome_screen():
    return 'Hello, Penny!'
 
 @app.route('/signup', methods=['POST'])
-@cross_origin()
 def signup():
     
     # Get the data from the POST request
@@ -66,7 +64,6 @@ def signup():
     return jsonify(response)
 
 @app.route('/login', methods=['POST'])
-@cross_origin()
 def login():
     # Get the data from the POST request
     data = request.get_json()
@@ -111,7 +108,6 @@ def login():
 
 # Route to handle POST requests to /api/second_route
 @app.route('/prompt', methods=['POST'])
-@cross_origin()
 def handlePrompt():
     # Get the data from the POST request
     data = request.get_json()
@@ -175,7 +171,6 @@ def handlePrompt():
     return jsonify(response)
 
 @app.route('/twil', methods=['POST'])
-@cross_origin()
 def handleTwil():
   # Get the data from the POST request
   data = request.get_json()
