@@ -8,9 +8,9 @@ form.addEventListener('submit', event => {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  axios.post('/login', {
+  axios.post('http://scrib-samp-ao5viirvgl0i.eba-qnybmrjh.us-east-1.elasticbeanstalk.com/login', {
     user: username,
-    password
+    password: password
   })
   .then(response => {
     // handle success response
@@ -22,9 +22,6 @@ form.addEventListener('submit', event => {
     // handle error response
     console.log(error.response.data);
     // display an error message to the user
-    const errorText = document.createElement('p');
-    errorText.classList.add('error');
-    errorText.textContent = error.response.data.message;
-    form.appendChild(errorText);
+    alert('There was an error, try again later');
   });
 });

@@ -12,7 +12,7 @@ form.addEventListener('submit', event => {
   const password = document.getElementById('password').value;
   const adminPassword = document.getElementById('admin-password').value;
 
-  axios.post('http://scribbleaiv2-env.eba-mep75nuh.us-east-1.elasticbeanstalk.com/signup', {
+  axios.post('/signup', {
     name: name,
     user: username,
     password: password,
@@ -28,9 +28,6 @@ form.addEventListener('submit', event => {
     // handle error response
     console.log(error.response.data);
     // display an error message to the user
-    const errorText = document.createElement('p');
-    errorText.classList.add('error');
-    errorText.textContent = error.response.data.message;
-    form.appendChild(errorText);
+    alert(error.response.data.message);
   });
 });
